@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">CustomWidget</string>
+    <string-array name="store_groceries_title">
+        <item>Deliver to</item>
+        <item>Pick up near</item>
+    </string-array>
+</resources>

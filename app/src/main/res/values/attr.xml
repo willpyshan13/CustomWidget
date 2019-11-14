@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="StoreSearchToolBar">
+        <attr name="searchTitle" format="string" />
+        <attr name="searchHint" format="string" />
+        <attr name="onSubmit" format="string" />
+        <attr name="onBackAction" format="string" />
+        <attr name="locationText" format="string" />
+        <attr name="onMoreAction" />
+        <attr name="onLocationAction" />
+        <attr name="onTextChange"></attr>
+        <attr name="storeSearchBarMark" format="integer"></attr>
+        <attr name="storeSearchBarMarkIcon" format="reference"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="TmpViewAdapter">
+        <attr name="storeImageUrl" />
+        <attr name="storeImageKeyName" />
+        <attr name="storeViewRound" />
+        <attr name="storeColorPlaceholder" />
+        <attr name="storeImageR"></attr>
+
+    </declare-styleable>
+
+    <declare-styleable name="StoreTagAdapter">
+        <attr name="storeTagData" />
+        <attr name="storeTagSelectListener" />
+        <attr name="storeTagSelectData" />
+    </declare-styleable>
+
+    <declare-styleable name="MaterialSearchView">
+
+        <attr name="margin" format="dimension"></attr>
+        <attr name="onMSearchSubmit"></attr>
+        <attr name="onMSearchSuggestionsData"></attr>
+        <attr name="onMSearchClickItem"></attr>
+        <attr name="onMsearchLoadMoreAction"></attr>
+        <attr name="isMSearchCompleted"></attr>
+        <attr name="searchViewBackground"></attr>
+
+    </declare-styleable>
+
+    <declare-styleable name="SmartRefreshLayout">
+        <attr name="smartRefreshLayoutLoadMoreCompleted"></attr>
+        <attr name="smartRefreshLayoutRefreshCompleted"></attr>
+        <attr name="smartRefreshLayoutLoadmoreEnable"></attr>
+        <attr name="smartRefreshLayoutRefreshEnable"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="ProductControlWidget">
+        <attr name="isOpen" format="boolean" />
+        <attr name="textSize" format="dimension|reference" />
+        <attr name="textColor" format="color" />
+        <attr name="borderWidth" format="dimension|reference" />
+        <attr name="borderColor" format="color" />
+        <attr name="fillContent" format="boolean" />
+        <attr name="borderDuration" format="integer" />
+        <attr name="textRes" format="reference"/>
+        <attr name="animDuration" format="integer" />
+    </declare-styleable>
+</resources>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <Button
+        android:id="@+id/btn_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_top" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/shopping_car"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_bottom">
+
+        <ImageView
+            android:id="@+id/image_res"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="13dp"
+            android:src="@mipmap/store_detail_shopping_car"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.will.myapplication.ScrollTextWidget
+            android:id="@+id/scroll_text"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            app:borderColor="#f38700"
+            app:fillContent="true"
+            app:layout_constraintRight_toRightOf="@id/image_res"
+            app:layout_constraintTop_toTopOf="@id/image_res"
+            app:textColor="#ffffff"
+            app:textSize="10sp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <com.will.myapplication.ScrollTextWidget
+        android:id="@+id/scroll_text_content"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        app:borderColor="#f38700"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shopping_car"
+        app:textColor="#000000"
+        app:textRes="@array/store_groceries_title"
+        app:textSize="12sp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
