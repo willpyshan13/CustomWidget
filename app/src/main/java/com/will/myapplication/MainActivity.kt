@@ -22,6 +22,10 @@ class MainActivity : AppCompatActivity() {
             scroll_text_content.showPre()
         }
 
+        btn_3.setOnClickListener {
+            scroll_text_content.showNext()
+        }
+
         btn_bottom.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
 //                scroll_text.showPre()

@@ -56,6 +56,13 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <Button
+        android:id="@+id/btn_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shopping_car" />
 
     <com.will.myapplication.ScrollTextWidget
         android:id="@+id/scroll_text_content"
@@ -64,7 +71,7 @@
         app:borderColor="#f38700"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/shopping_car"
+        app:layout_constraintTop_toBottomOf="@+id/btn_3"
         app:textColor="#000000"
         app:textRes="@array/store_groceries_title"
         app:textSize="12sp" />

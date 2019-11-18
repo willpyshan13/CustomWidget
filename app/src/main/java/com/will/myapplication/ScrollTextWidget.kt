@@ -4,6 +4,7 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 
 /**
@@ -200,6 +201,8 @@ class ScrollTextWidget @JvmOverloads constructor(
      */
     private fun drawScrollText(canvas: Canvas) {
         canvas.save()
+        Log.d("text","drawScrollText:height==${height} offset = $offset")
+        Log.d("text","drawScrollText:height==${width} offset = $offset")
         val textWidth = width / 2F
         textList?.let {
             if (number > oldNumber) {
@@ -207,9 +210,11 @@ class ScrollTextWidget @JvmOverloads constructor(
                 canvas.drawText(
                     textList!![number],
                     textWidth,
-                    offset + (height + textRect.height()) / 2,
+                    offset + (height +textRect.height()) / 2F,
                     textPaint
                 )
+
+                Log.d("text",""+(offset + (height ) / 2F))
 
                 textPaint.getTextBounds(
                     textList!![oldNumber],
@@ -220,18 +225,20 @@ class ScrollTextWidget @JvmOverloads constructor(
                 canvas.drawText(
                     textList!![oldNumber],
                     textWidth,
-                    offset + (height + textRect.height()) / 2 - height,
+                    offset + (height +textRect.height()) / 2F - height,
                     textPaint
                 )
+                Log.d("text",""+(textWidth))
+                Log.d("text",""+(offset + (height ) / 2F - height))
             } else {
                 textPaint.getTextBounds(textList!![number], 0, textList!![number].length, textRect)
                 canvas.drawText(
                     textList!![number],
                     textWidth,
-                    offset + (height + textRect.height()) / 2 - height,
+                    offset + (height ) / 2F - height,
                     textPaint
                 )
-
+                Log.d("text",""+(offset + (height+textRect.height() ) / 2F - height))
                 textPaint.getTextBounds(
                     textList!![oldNumber],
                     0,
@@ -241,9 +248,11 @@ class ScrollTextWidget @JvmOverloads constructor(
                 canvas.drawText(
                     textList!![oldNumber],
                     textWidth,
-                    offset + (height + textRect.height()) / 2,
+                    offset + (height+textRect.height() ) / 2,
                     textPaint
                 )
+                Log.d("text",""+(textWidth))
+                Log.d("text",""+(offset + (height ) / 2F))
             }
         }
         canvas.restore()
