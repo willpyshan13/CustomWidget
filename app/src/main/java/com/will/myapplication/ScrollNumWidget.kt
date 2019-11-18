@@ -3,7 +3,6 @@ package com.will.myapplication
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.*
-import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.View
 
@@ -20,7 +19,7 @@ import android.view.View
  *
  * @Author: pengyushan
  */
-class ScrollTextWidget @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : View(context, attrs, defStyleAttr) {
+class ScrollNumWidget @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : View(context, attrs, defStyleAttr) {
 
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -34,8 +33,6 @@ class ScrollTextWidget @JvmOverloads constructor(context: Context, attrs: Attrib
     private val borderColor: Int
     private var textList: Array<String>? = null
 
-    private var textGravity: String = "left"
-
     var oldNumber = 0
     var number = 0
     val borderWidth = 0F
@@ -47,23 +44,38 @@ class ScrollTextWidget @JvmOverloads constructor(context: Context, attrs: Attrib
 
     init {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ProductControlWidget)
-        textColor = typedArray.getColor(R.styleable.ProductControlWidget_textColor, Color.parseColor("#000000"))
-        borderColor = typedArray.getColor(R.styleable.ProductControlWidget_borderColor, Color.parseColor("#000000"))
+        textColor = typedArray.getColor(
+                R.styleable.ProductControlWidget_textColor,
+                Color.parseColor("#000000")
+        )
+        borderColor = typedArray.getColor(
+                R.styleable.ProductControlWidget_borderColor,
+                Color.parseColor("#000000")
+        )
         fillContent = typedArray.getBoolean(R.styleable.ProductControlWidget_fillContent, false)
         animDuration =
                 typedArray.getInt(R.styleable.ProductControlWidget_animDuration, 300).toLong()
-        textGravity = typedArray.getString(R.styleable.ProductControlWidget_textGravity).toString()
         textSize = typedArray.getDimension(R.styleable.ProductControlWidget_textSize, 30f)
-        val i = typedArray.getResourceId(R.styleable.ProductControlWidget_textRes, 0)
+        val i = typedArray.getResourceId(
+                R.styleable.ProductControlWidget_textRes,
+                0
+        )
         if (i > 0) {
             textList = resources.getStringArray(i)
         }
 
-        drawText = textList.isNullOrEmpty()
+        drawText = !textList.isNullOrEmpty()
         typedArray.recycle()
         initPaint()
     }
 
+    /**
+     * 初始化画笔
+     * Desc:
+     * <p>
+     * Author: pengyushan
+     * Date: 2019-11-14
+     */
     private fun initPaint() {
         paint.isAntiAlias = true
         if (fillContent) {
@@ -75,11 +87,18 @@ class ScrollTextWidget @JvmOverloads constructor(context: Context, attrs: Attrib
 
         textPaint.color = textColor
         textPaint.textSize = textSize
-        if (isCenterDraw()){
-            textPaint.textAlign = Paint.Align.CENTER
-        }
+        textPaint.textAlign = Paint.Align.CENTER
     }
 
+    /**
+     *
+     * Desc: 计算布局的实际高度
+     * <p>
+     * Author: pengyushan
+     * Date: 2019-11-14
+     * @param widthMeasureSpec Int
+     * @param heightMeasureSpec Int
+     */
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         mMaxWidth = (MeasureSpec.getSize(widthMeasureSpec))
@@ -96,6 +115,15 @@ class ScrollTextWidget @JvmOverloads constructor(context: Context, attrs: Attrib
         )
     }
 
+    /**
+     *
+     * Desc: 计算高度
+     * <p>
+     * Author: pengyushan
+     * Date: 2019-11-14
+     * @param measureSpec Int
+     * @return Int
+     */
     private fun measureWidth(measureSpec: Int): Int {
         val specMode = MeasureSpec.getMode(measureSpec)
         val specSize = MeasureSpec.getSize(measureSpec)
@@ -116,18 +144,64 @@ class ScrollTextWidget @JvmOverloads constructor(context: Context, attrs: Attrib
     }
 
 
+    /**
+     *
+     * Desc: 画背景跟文字
+     * <p>
+     * Author: pengyushan
+     * Date: 2019-11-14
+     * @param canvas Canvas
+     */
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         canvas?.let {
-            drawScrollText(it)
+            if (drawText) {
+                drawScrollText(it)
+            } else if (number > 0) {
+                drawBg(it)
+                drawScrollNumText(it)
+            }
         }
-
     }
 
-    private fun isCenterDraw():Boolean{
-        return TextUtils.equals("center",textGravity)
+    /**
+     * Desc:圆形
+     * <p>
+     * Author: pengyushan
+     * Date: 2019-11-14
+     * @param canvas Canvas?
+     */
+    private fun drawBg(canvas: Canvas) {
+        canvas.save()
+        canvas.drawCircle(width / 2.toFloat(), height / 2.toFloat(), width / 2.toFloat(), paint)
+        canvas.restore()
     }
 
+    /**
+     * Desc:绘制滚动数字
+     * <p>
+     * Author: zhuanghongzhan
+     * Date: 2019-11-11
+     * @param canvas Canvas
+     */
+    private fun drawScrollNumText(canvas: Canvas) {
+        canvas.save()
+        val textWidth = width / 2F
+        if (number > oldNumber) {
+            textPaint.getTextBounds(number.toString(), 0, number.toString().length, textRect)
+            canvas.drawText(number.toString(), textWidth, offset + (height + textRect.height()) / 2, textPaint)
+
+            textPaint.getTextBounds(oldNumber.toString(), 0, oldNumber.toString().length, textRect)
+            canvas.drawText(oldNumber.toString(), textWidth, offset + (height + textRect.height()) / 2 - height, textPaint)
+        } else {
+            textPaint.getTextBounds(number.toString(), 0, number.toString().length, textRect)
+            canvas.drawText(number.toString(), textWidth, offset + (height + textRect.height()) / 2 - height, textPaint)
+
+            textPaint.getTextBounds(oldNumber.toString(), 0, oldNumber.toString().length, textRect)
+            canvas.drawText(oldNumber.toString(), textWidth, offset + (height + textRect.height()) / 2, textPaint)
+        }
+        canvas.restore()
+    }
 
     /**
      * Desc:绘制滚动文字
@@ -138,24 +212,18 @@ class ScrollTextWidget @JvmOverloads constructor(context: Context, attrs: Attrib
      */
     private fun drawScrollText(canvas: Canvas) {
         canvas.save()
-        var textWidth = 0F
-        if (isCenterDraw()){
-             textWidth = width / 2F
-        }
+        val textWidth = width / 2F
         textList?.let {
             if (number > oldNumber) {
                 textPaint.getTextBounds(textList!![number], 0, textList!![number].length, textRect)
-                canvas.drawText(textList!![number], textWidth, offset + (height + textRect.height()) / 2, textPaint)
-
+                canvas.drawText(textList!![number], textWidth, offset + (height + textRect.height()) / 2F, textPaint)
                 textPaint.getTextBounds(textList!![oldNumber], 0, textList!![oldNumber].length, textRect)
-                canvas.drawText(textList!![oldNumber], textWidth, offset + (height + textRect.height()) / 2 - height, textPaint)
+                canvas.drawText(textList!![oldNumber], textWidth, offset + (height + textRect.height()) / 2F - height, textPaint)
             } else {
                 textPaint.getTextBounds(textList!![number], 0, textList!![number].length, textRect)
-                canvas.drawText(textList!![number], textWidth, offset + (height + textRect.height()) / 2 - height, textPaint)
-
+                canvas.drawText(textList!![number], textWidth, offset + (height) / 2F - height, textPaint)
                 textPaint.getTextBounds(textList!![oldNumber], 0, textList!![oldNumber].length, textRect)
-                canvas.drawText(textList!![oldNumber], textWidth, offset + (height + textRect.height()) / 2, textPaint
-                )
+                canvas.drawText(textList!![oldNumber], textWidth, offset + (height + textRect.height()) / 2, textPaint)
             }
         }
         canvas.restore()
@@ -163,14 +231,22 @@ class ScrollTextWidget @JvmOverloads constructor(context: Context, attrs: Attrib
 
     fun showNext() {
         oldNumber = number
-        number = 1
+        if (drawText) {
+            number = 1
+        } else {
+            number++
+        }
         startScrollAnim()
         postInvalidate()
     }
 
     fun showPre() {
         oldNumber = number
-        number = 0
+        if (drawText) {
+            number = 0
+        } else {
+            number--
+        }
         startScrollAnim()
         postInvalidate()
     }

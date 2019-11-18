@@ -57,6 +57,7 @@
         <attr name="fillContent" format="boolean" />
         <attr name="borderDuration" format="integer" />
         <attr name="textRes" format="reference"/>
+        <attr name="textGravity" format="string"/>
         <attr name="animDuration" format="integer" />
     </declare-styleable>
 </resources>
